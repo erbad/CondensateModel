@@ -1,4 +1,4 @@
-## CondensateModel
+# CondensateModel
 
 #### Description of the model
 
