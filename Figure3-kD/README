@@ -1,0 +1,19 @@
+List of what is inside:
+
+10/3/25 
+- ePP-Perc-kD.dat
+  Raw data of kDs from simulations:
+  * at 50uM of concentration, 
+  * 2.5us long
+  * ePR=14 
+  Sigma is set to 1.5nm and energetic cutoff is used to consider bound state.
+  Thus, cutoff distance is:
+  r_co = 1/pi * arccos(4/eps - 1)
+  where eps is the unit of KT for ePR.
+  For ePR=14, r_co = 0.7532 sigma.
+
+- ePR-ePP-rep-PercBound-A10.dat
+  Same as before but for A10+10B simulations. 7 replicas of 1us for each ePP.
+
+- PlotKD.ipynb
+  Notebook to plot kD pictures as in YRS in March 7.
