@@ -11,5 +11,12 @@ are saved in output file.
 With slight modifications, it can be adapted for different situations
 (RNA mix, competitor...).
 
+12/03/25
+Occupancy.py
+Computes average occupancy of chains. Requires indeces of single chains 
+and the pairdist file created with gromacs as written at the beginning of the script.
+
+MakeIndexSingleChains.py
+Creates indeces file and attach it to the existent one.
 
 
