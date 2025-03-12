@@ -1,0 +1,15 @@
+Summary of scripts, date and modifications
+
+11/03/25
+Density.py
+
+Script that works even in case in which there is a small droplet.
+Fixed the indices selection that gave problem. Integration of histo
+gives the number of C in the system. It splits the simulation in three
+parts of 1000 frames each and fits the data of each part. Fitting params
+are saved in output file.
+With slight modifications, it can be adapted for different situations
+(RNA mix, competitor...).
+
+
+
