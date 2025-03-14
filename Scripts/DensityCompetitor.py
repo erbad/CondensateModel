@@ -7,7 +7,7 @@ from sys import argv
 import pathlib
 
 # COMMAND: python density.py ePP ePR
-# To search the folder=ePP$ePP/ePR$ePR/rep_a/
+# To search the folder=ePP$ePP/ePR$ePR/
 # requires folder/pbc.xtc and folder/md.gro
 
 ##################################################
@@ -185,18 +185,18 @@ with open(folder + '/densityA100.dat', 'w') as fo:
             fo.write('{:<15}{:<15}\n'.format(format(B, '.3E'), format(H, '.3E')))
 
 
-# Fitting A100 density
+# Fitting Competitor density
 
-avg_histoA10 = np.mean(HISTD, axis=0)
+avg_histoD = np.mean(HISTD, axis=0)
 for h in HISTD:
       ax.plot(np.array(BINSD), h, alpha=0.05, color=colors['D'], linewidth=0.6)
 
-ax.plot(np.array(BINSD), avg_histoA10, linewidth=4, color=colors['D'], label='Competitor')
+ax.plot(np.array(BINSD), avg_histoD, linewidth=4, color=colors['D'], label='Competitor')
 
 ax.legend(fontsize=15)
 fig.savefig(folder + '/density.png', dpi=300, bbox_inches='tight')
 
 with open(folder + '/densityCompetitor.dat', 'w') as fo:
-      for B, H in zip(BINSD, avg_histoA10):
+      for B, H in zip(BINSD, avg_histoD):
             fo.write('{:<15}{:<15}\n'.format(format(B, '.3E'), format(H, '.3E')))
 
