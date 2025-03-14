@@ -6,8 +6,8 @@ from math import dist
 from sys import argv
 import pathlib
 
-# COMMAND: python density.py ePP ePR
-# To search the folder=ePP$ePP/ePR$ePR/
+# COMMAND: python density.py factor
+# To search the folder=factor$factor
 # requires folder/pbc.xtc and folder/md.gro
 
 ##################################################
@@ -30,10 +30,10 @@ def ComputeDensity(traj, binning, Begin, End):
       # C -> Binder
       # D -> Competitor
 
-      C_sel, A100_sel, D_sel = traj.select_atoms('name C'), traj.select_atoms('index 0 to 1999'),  traj.select_atoms('name D')
+      C_sel, A100_sel, D_sel = traj.select_atoms('name C'), traj.select_atoms('index 0 to 3999'),  traj.select_atoms('name D')
       C_ind, A100_ind, D_ind = list([i.index for i in C_sel]), list([i.index for i in A100_sel]), list([i.index for i in D_sel])
-      C_ind_from0 = np.array((np.array(C_ind) - len(A100_ind) - len(D_ind)) / 2, dtype=int)
-      D_ind_from0 = np.array((np.array(D_ind) - len(A100_ind)), dtype=int)
+      C_ind_from0 = np.array((np.array(C_ind) - len(A100_ind)) / 2, dtype=int)
+      D_ind_from0 = np.array((np.array(D_ind) - (len(A100_ind) + len(C_ind)*2)) / 2, dtype=int)
 
       # Quantities we want to get
       CM_ts, cluster_size = [], []
@@ -42,7 +42,7 @@ def ComputeDensity(traj, binning, Begin, End):
       HISTD, BINSD = [], []
       count = 0
       
-      BaseBins = range(0, int(np.floor(np.sqrt(3) * side)), 5) # 1 bin each 5 sigmas in a range going from 0 to the length of box diagonal
+      BaseBins = range(0, int(np.floor(np.sqrt(3) * side)), binning) # 1 bin each 5 sigmas in a range going from 0 to the length of box diagonal
 
       for t in range(Begin, End, 10):
             
@@ -101,7 +101,7 @@ def ComputeDensity(traj, binning, Begin, End):
             hist_rewD = [histD[h]/((SphereVolume(binsD[h+1]) - SphereVolume(binsD[h]))) for h in range(len(histD))]
             HISTD.append(hist_rewD)
 
-            if t%250==0:
+            if t%20==0:
                   print('Step %s done!' %(t))
                   print(len(largest_cluster), center_of_mass_cluster)
       print('Analyzed %s frames' %count)
@@ -112,23 +112,22 @@ def ComputeDensity(traj, binning, Begin, End):
 ########## MAIN
 
 # Generating name of folders in Matteo directory according to simulation type
-ePP = float(argv[1])    # ePP
-ePR = int(argv[2])      # epR 
+factor = float(argv[1])    # ePP
 
 
 # Creating a folder in this directory
 pwd = pathlib.Path().resolve()
-folder = f'ePP{ePP}/ePR{ePR}' 
+folder = f'factor{factor}' 
 
 
-gro, xtc = f'{folder}/md.gro', f'{folder}/md.xtc'
+gro, xtc = f'{folder}/large_box.gro', f'{folder}/md.xtc'
 
 traj = mda.Universe(gro, xtc)
 side = traj.dimensions[0]
 SimFrames = len(traj.trajectory)    # End of Density analysis frames
-DensFrames = SimFrames - 3000       # Begin of Density analysis frames
+DensFrames = SimFrames - 500       # Begin of Density analysis frames
 
-print(SimFrames, DensFrames)
+print(DensFrames, SimFrames)
 
 binning = 5
 
@@ -138,7 +137,7 @@ HISTC, BINSC, HISTA100, BINSA100, HISTD, BINSD, cluster_size, CM_ts = ComputeDen
 
 colors = {'C':'tab:blue',
           'A100':'tab:red',
-          'D':'darkgoldenrod'}
+          'D':'forestgreen'}
 
 # Fitting C density
 
@@ -164,6 +163,9 @@ nbins = int((side / 10) // 2 // binning // 2) # half_side [nm] / bin_width / 2 (
 print(nbins)
 
 ax.plot(np.array(BINSC), avg_histoC, linewidth=4, color=colors['C'], label='Protein')
+
+print(len(BINSC))
+print(len(avg_histoC))
 
 
 with open(folder + '/densityBinder.dat', 'w') as fo:
