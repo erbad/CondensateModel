@@ -16,8 +16,8 @@
 
   
 ##### 2- Figura_2: Reentrant Phase Separation (Matteo)
-- [ ] Integrale g(r) per valutare densit locale.
-- [ ] Rifare per tre repliche e propagare errore.
+- [x] Integrale g(r) per valutare densit locale.
+- [x] Rifare per tre repliche e propagare errore.
 - [ ] Distribuzione occupazione singola catena per 3 repliche. 
 - [ ] Bozza testo
 
@@ -35,9 +35,9 @@
 ##### 4- Figura_4: Binding and Kd (Davide + Matteo)
 - [ ] Sistema semplificato Kd teorica (rivedere) (Davide)
 - [ ] Competitor: (Matteo)
-- [ ] Aumento progressiovo competitor (x1 x2 x3). (Matteo)
+- <s>[ ] Aumento progressiovo competitor (x1 x2 x3). (Matteo)</s>
 - [ ] Competitor e binder stesso numero. (Matteo)
-- [ ] Competior molto maggiore del binder. (Matteo)
+- <s>[ ] Competior molto maggiore del binder. (Matteo)</s>
 
 
 
